@@ -11,9 +11,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', redirect: '/teams' },
-    { path: '/teams', component: TeamsList },
+    {
+      path: '/teams',
+      component: TeamsList,
+      children: [
+        // nested routing so no need to write '/teams/
+        { path: ':teamId', component: TeamMembers, props: true }, // localhost:8080/teams/t1
+      ],
+    },
     { path: '/users', component: UsersList },
-    { path: '/teams/:teamId', component: TeamMembers, props: true }, // localhost:8080/teams/u1
+
     { path: '/:notFound(.*)', component: NotFound },
   ],
   linkActiveClass: 'active',
