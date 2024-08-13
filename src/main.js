@@ -27,7 +27,15 @@ const router = createRouter({
         }, // localhost:8080/teams/t1
       ],
     },
-    { path: '/users', components: { default: UsersList, footer: UsersFooter } },
+    {
+      path: '/users',
+      components: { default: UsersList, footer: UsersFooter },
+      beforeEnter(to, from, next) {
+        console.log('users beforeEnter.....');
+        console.log(to, from);
+        next();
+      },
+    },
 
     { path: '/:notFound(.*)', component: NotFound }, // default (unnamed) router view
   ],
@@ -39,5 +47,13 @@ const router = createRouter({
     return { left: 0, top: 0 };
   },
 });
+
+// router.beforeEach(function (_, _2, next) {
+//   if (to.name === 'team-members') {
+//     next();
+//   } else {
+//     next({ name: 'team-member', params: { teamId: 't2' } });
+//   }
+// });
 app.use(router);
 app.mount('#app');
